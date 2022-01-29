@@ -13,10 +13,13 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 		<ee:transform doc:name="Transform Message" doc:id="a890f782-1d62-40f0-af4f-9e4c740162e2" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
-output application/json
+output application/xml
 ---
-{
-	"name": attributes.queryParams.name as String
+customers:{
+	customer @("id":attributes.queryParams.ID):{"first_name": attributes.queryParams.first_name,
+		       "last_name": attributes.queryParams.last_name
+}
+
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
