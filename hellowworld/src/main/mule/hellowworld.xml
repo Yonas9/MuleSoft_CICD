@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="86d431bd-9091-4c45-b15c-fe8f645e3836" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="helloworld" doc:id="dae3b9db-f2ea-4a1b-9524-810a1f395603" >
+		<http:listener doc:name="Listener" doc:id="56b819e5-4a9b-46ff-b21e-1df7e0cb9a5e" config-ref="HTTP_Listener_config" path="/hello"/>
+		<choice doc:name="Choice" doc:id="6c6ad89d-4410-4d3b-98ff-edb19befd3df" >
+			<when expression='#[not isEmpty(attributes.queryParams.name)]'>
+				<set-payload value='#["Hello " ++ attributes.queryParams.name as String]' doc:name="Set Payload" doc:id="8cc11bea-2270-49a9-8027-51fd08172acf" />
+			</when>
+			<otherwise >
+				<set-payload value='#["Hellow there!!" as String]' doc:name="Set Payload" doc:id="685938f7-d3fe-4077-b3ba-a1c8a807befb" />
+			</otherwise>
+		</choice>
+	</flow>
+</mule>
